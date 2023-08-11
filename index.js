@@ -56,11 +56,58 @@ class Tree {
       else this.insertLeaf(value, node.right);
     }
   }
+
+  delete(value) {
+    const dir = value < this.root.data ? 'left' : 'right';
+
+    this.deleteLeaf(value, this.root, dir, this.root[dir]);
+  }
+
+  deleteLeaf(value, parent, parentDir, child) {
+    if (value === child.data) { // If the node matches the value
+      if (child.left === null && child.right == null) { // If no children
+        parent[parentDir] = null;
+        return;
+      }
+
+      if (child.left === null || child.right === null) { // If one child
+        const dir = child.left === null ? 'right' : 'left';
+        parent[parentDir] = child[dir];
+        return;
+      }
+
+      else { // two children
+        const rightChild = child.right;
+        let leftestParent = rightChild;
+        let leftestChild = leftestParent.left;
+        
+        while (leftestChild.left !== null) {
+          leftestParent = leftestChild;
+          leftestChild = leftestParent.left;
+        }
+
+        parent[parentDir] = leftestChild;
+        leftestParent.left = leftestChild.right;
+        leftestChild.left = child.left;
+        leftestChild.right = child.right;
+      }
+    }
+    else { // Else recurse until found
+      const dir = value < child.data ? 'left' : 'right';
+      this.deleteLeaf(value, child, dir, child[dir]);
+    }
+  }
 }
 
 const bigTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
 
 bigTree.insert(2);
+
+bigTree.prettyPrint();
+
+console.log('-----------');
+
+bigTree.delete(4);
 
 bigTree.prettyPrint();
