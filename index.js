@@ -40,7 +40,22 @@ class Tree {
       this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
   }
+
+  insert(value, node = this.root) {
+    if (value < node.data) {
+      if (node.left === null) node.left = new Node(value, null, null);
+      else this.insert(value, node.left);
+    } 
+    else if (value > node.data) {
+      if (node.right === null) node.right = new Node(value, null, null);
+      else this.insert(value, node.right);
+    }
+  }
 }
 
 const bigTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+
+
+bigTree.insert(1);
+
 bigTree.prettyPrint();
