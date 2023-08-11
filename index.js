@@ -1,8 +1,8 @@
 class Node {
   constructor(data, left, right) {
     this.data = data;
-    this.left = left;
-    this.right = right;
+    this.left = left || null;
+    this.right = right || null;
   }
 }
 
@@ -41,14 +41,19 @@ class Tree {
     }
   }
 
-  insert(value, node = this.root) {
+  insert(value) {
+    if (this.root === null) this.root = new Node(value);
+    else this.insertLeaf(value, this.root);
+  }
+
+  insertLeaf(value, node) {
     if (value < node.data) {
-      if (node.left === null) node.left = new Node(value, null, null);
-      else this.insert(value, node.left);
+      if (node.left === null) node.left = new Node(value);
+      else this.insertLeaf(value, node.left);
     } 
     else if (value > node.data) {
-      if (node.right === null) node.right = new Node(value, null, null);
-      else this.insert(value, node.right);
+      if (node.right === null) node.right = new Node(value);
+      else this.insertLeaf(value, node.right);
     }
   }
 }
@@ -56,6 +61,6 @@ class Tree {
 const bigTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
 
-bigTree.insert(1);
+bigTree.insert(2);
 
 bigTree.prettyPrint();
