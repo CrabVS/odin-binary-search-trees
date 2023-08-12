@@ -58,19 +58,38 @@ class Tree {
   }
 
   delete(value) {
-    const dir = value < this.root.data ? 'left' : 'right';
+    if (value === this.root.data) {
+      const rightChild = this.root.right; //67
+      let leftestParent = rightChild; //8 eventually 9
+      let leftestChild = leftestParent.left;
 
-    this.deleteLeaf(value, this.root, dir, this.root[dir]);
+      while (leftestChild.left !== null) {
+        leftestParent = leftestChild; //23
+        leftestChild = leftestParent.left; //9
+      }
+
+      leftestParent.left = leftestChild.right;
+      leftestChild.left = this.root.left;
+      leftestChild.right = this.root.right;
+
+      this.root = leftestChild;
+    } 
+    else {
+      const dir = value < this.root.data ? 'left' : 'right';
+
+      this.deleteLeaf(value, this.root, dir, this.root[dir]);
+    }
   }
 
   deleteLeaf(value, parent, parentDir, child) {
-    if (value === child.data) { // If the node matches the value
+    if (child === null) return null;
+    if (value === child.data || value === this.root.data) { // If the node matches the value
       if (child.left === null && child.right == null) { // If no children
         parent[parentDir] = null;
         return;
       }
 
-      if (child.left === null || child.right === null) { // If one child
+      if (child.left === null) { // If one child
         const dir = child.left === null ? 'right' : 'left';
         parent[parentDir] = child[dir];
         return;
