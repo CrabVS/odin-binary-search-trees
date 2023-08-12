@@ -80,7 +80,7 @@ class Tree {
         const rightChild = child.right;
         let leftestParent = rightChild;
         let leftestChild = leftestParent.left;
-        
+
         while (leftestChild.left !== null) {
           leftestParent = leftestChild;
           leftestChild = leftestParent.left;
@@ -97,6 +97,17 @@ class Tree {
       this.deleteLeaf(value, child, dir, child[dir]);
     }
   }
+
+  find(value, node = this.root) {
+    if (value === node.data) {
+      return node;
+    }
+    if (node.left === null && node.right === null) return null;
+
+    const dir = value < node.data ? 'left' : 'right';
+
+    return this.find(value, node[dir]);
+  }
 }
 
 const bigTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -108,6 +119,6 @@ bigTree.prettyPrint();
 
 console.log('-----------');
 
-bigTree.delete(4);
+bigTree.delete(8);
 
 bigTree.prettyPrint();
