@@ -193,6 +193,13 @@ class Tree {
 
     return counter;
   }
+
+  isBalanced() {
+    const leftPath = this.height(this.root.left);
+    const rightPath = this.height(this.root.right);
+
+    return leftPath === rightPath ? true : false;
+  }
 }
 
 const bigTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -210,3 +217,4 @@ bigTree.prettyPrint();
 
 console.log(bigTree.height());
 console.log(bigTree.depth(bigTree.root));
+console.log(bigTree.isBalanced());
