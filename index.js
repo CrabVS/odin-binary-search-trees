@@ -144,6 +144,36 @@ class Tree {
 
     if (!callback) return values;
   }
+
+  inorder(callback = null, node = this.root, values = []) {
+    if (node === null) return;
+
+    this.inorder(callback, node.left, values);
+    callback !== null ? callback(node) : values.push(node.data);
+    this.inorder(callback, node.right, values);
+
+    if (callback === null) return values;
+  }
+
+  preorder(callback = null, node = this.root, values = []) {
+    if (node === null) return;
+
+    callback !== null ? callback(node) : values.push(node.data);
+    this.preorder(callback, node.left, values);
+    this.preorder(callback, node.right, values);
+
+    if (callback === null) return values;
+  }
+
+  postorder(callback = null, node = this.root, values = []) {
+    if (node === null) return;
+
+    this.postorder(callback, node.left, values);
+    this.postorder(callback, node.right, values);
+    callback !== null ? callback(node) : values.push(node.data);
+
+    if (callback === null) return values;
+  }
 }
 
 const bigTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -159,4 +189,6 @@ bigTree.delete(4);
 
 bigTree.prettyPrint();
 
-console.log(bigTree.levelOrder());
+console.log(bigTree.inorder());
+console.log(bigTree.preorder());
+console.log(bigTree.postorder());
