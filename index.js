@@ -174,6 +174,25 @@ class Tree {
 
     if (callback === null) return values;
   }
+
+  height(node = this.root) {
+    if (node === null) return -1;
+
+    return Math.max(this.height(node.left), this.height(node.right)) + 1;
+  }
+
+  depth(node) {
+    let counter = 0;
+
+    let comparedNode = this.root;
+    while (comparedNode.data !== node.data) {
+      counter += 1;
+      if (node.data > comparedNode.data) comparedNode = comparedNode.right;
+      else if (node.data < comparedNode.data) comparedNode = comparedNode.left;
+    }
+
+    return counter;
+  }
 }
 
 const bigTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -189,6 +208,5 @@ bigTree.delete(4);
 
 bigTree.prettyPrint();
 
-console.log(bigTree.inorder());
-console.log(bigTree.preorder());
-console.log(bigTree.postorder());
+console.log(bigTree.height());
+console.log(bigTree.depth(bigTree.root));
