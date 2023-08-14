@@ -211,17 +211,39 @@ class Tree {
 const bigTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
 
-bigTree.insert(2);
+const randomizeArray = function randomizeArray(size = 100) {
+  let randArr = [];
+  for (let index = 0; index < size; index++) {
+    randArr.push(Math.floor((Math.random() * size) + 1));
+  }
 
-bigTree.prettyPrint();
+  return randArr;
+}
 
-console.log('-----------');
+const randArr = randomizeArray();
 
-bigTree.delete(4);
+const tree = new Tree(randArr);
+tree.prettyPrint();
 
-bigTree.prettyPrint();
+console.log(tree.isBalanced());
+//console.log(tree.levelOrder());
+//console.log(tree.inorder());
+//console.log(tree.preorder());
+//console.log(tree.postorder());
 
-console.log(bigTree.isBalanced());
-bigTree.rebalance();
-bigTree.prettyPrint();
-console.log(bigTree.isBalanced());
+for (let index = 0; index < 5; index++) {
+  const randNum = Math.floor((Math.random() * 1000) + 1);
+  tree.insert(randNum);
+}
+
+tree.prettyPrint();
+console.log(tree.isBalanced());
+
+tree.rebalance();
+tree.prettyPrint();
+console.log(tree.isBalanced());
+
+//console.log(tree.levelOrder());
+//console.log(tree.inorder());
+//console.log(tree.preorder());
+//console.log(tree.postorder());
