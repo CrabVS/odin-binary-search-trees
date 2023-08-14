@@ -200,6 +200,12 @@ class Tree {
 
     return leftPath === rightPath ? true : false;
   }
+
+  rebalance() {
+    const treeArr = this.levelOrder();
+    
+    this.root = this.buildTree(this.sortArray(treeArr));
+  }
 }
 
 const bigTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -215,6 +221,7 @@ bigTree.delete(4);
 
 bigTree.prettyPrint();
 
-console.log(bigTree.height());
-console.log(bigTree.depth(bigTree.root));
+console.log(bigTree.isBalanced());
+bigTree.rebalance();
+bigTree.prettyPrint();
 console.log(bigTree.isBalanced());
