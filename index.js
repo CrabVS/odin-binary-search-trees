@@ -59,13 +59,13 @@ class Tree {
 
   delete(value) {
     if (value === this.root.data) {
-      const rightChild = this.root.right; //67
-      let leftestParent = rightChild; //8 eventually 9
+      const rightChild = this.root.right;
+      let leftestParent = rightChild;
       let leftestChild = leftestParent.left;
 
       while (leftestChild.left !== null) {
-        leftestParent = leftestChild; //23
-        leftestChild = leftestParent.left; //9
+        leftestParent = leftestChild;
+        leftestChild = leftestParent.left;
       }
 
       leftestParent.left = leftestChild.right;
@@ -127,6 +127,23 @@ class Tree {
 
     return this.find(value, node[dir]);
   }
+
+  levelOrder(callback) {
+    let queue = [this.root];
+    let values = [];
+
+    while (queue.length !== 0) {
+      if (callback) callback(queue[0]);
+      if (queue[0].left !== null) queue.push(queue[0].left);
+      if (queue[0].right !== null) queue.push(queue[0].right);
+
+      values.push(queue[0].data);
+
+      queue.shift();
+    }
+
+    if (!callback) return values;
+  }
 }
 
 const bigTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -138,6 +155,8 @@ bigTree.prettyPrint();
 
 console.log('-----------');
 
-bigTree.delete(8);
+bigTree.delete(4);
 
 bigTree.prettyPrint();
+
+console.log(bigTree.levelOrder());
